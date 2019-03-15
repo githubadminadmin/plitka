@@ -1,0 +1,136 @@
+
+            <div class="row row-8">
+              <div class="entry__header col-md-12">
+                <h2 class="entry__title">
+                  <a href="blog-single.html">{{ collect_name.name }}</a>
+                </h2>
+                <ul class="entry__meta">
+                  <li class="entry__meta-category">
+                    <span class="entry__meta-label">Категория: </span><a href="#">{{ cat_name }}</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="entry__img-holder col-md-4">
+                <a href="blog-single.html">
+                  <img src="/media/{{ collect_name.image }}" alt="" class="entry__img">
+                </a>
+              </div>
+              <div class="entry__body col-md-8">                  
+
+              <div class="product_meta">
+                <ul>
+                  <li>
+                    <span class="product-proizvoditel">Производитель: <span>{{ collect_name.productproizvoditel.name }}</span></span>
+                  </li>
+                  <li>
+                    <span class="product-country">Страна: <span>{{ collect_name.productproizvoditel.productcountry.name }}</span></span>
+                  </li>
+                  <li>
+                    <span class="product-country">Описание: <span>{{ collect_name.description }}</span></span>
+                  </li>
+                </ul>                              
+            </div>
+              </div>
+            <h3>Товары из коллекции</h3>
+            <!--<div class="shop-filter col-md-12 text-left">
+              <span class="woocommerce-ordering-label">Сортировать</span>
+              <form class="woocommerce-ordering">
+                <select>
+                  <option value="default-sorting">Выбрать из списка</option>
+                  <option value="price-low-to-high">По цене &uarr;</option>
+                  <option value="price-high-to-low">По цене &darr;</option>
+                  <option value="by-popularity">By Popularity</option>
+                  <option value="date">By Newness</option>
+                  <option value="rating">By Rating</option>
+                </select>
+              </form>
+            </div>-->
+            {{ compositionscollection.name }}
+            <div class="col-md-12">
+              <nav>
+                <div class="nav nav-tabs col-md-12" id="nav-tab" role="tablist">
+                {% for compname in compositionscollection %}
+                  <a class="nav-item nav-link {% if compname == compositionscollection|first %} active {% endif %}" id="tab-{{ compname.id }}" data-toggle="tab" href="#{{ compname.id }}" role="tab" aria-controls="{{ compname.id }}" aria-selected="{% if compname == compositionscollection|first %}true{% else %}false{% endif %}">{{ compname.name }}</a>
+
+                {% endfor %}
+                </div>
+              </nav>
+              <div class="tab-content col-md-12" id="nav-tabContent">
+                {% for compname in compositionscollection %}
+                <div class="tab-pane fade {% if compname == compositionscollection|first %}show active {% endif %}col-md-12" id="{{ compname.id }}" role="tabpanel" aria-labelledby="{{ compname.id }}">
+                  
+                 {% for product in products %}
+                      {% if product.copmositions.id == compname.id %}
+                      <div class="col-md-3 card-tovar">
+                        <div class="col-md col-sm-6 product">
+                          <div class="product__img-holder text-center tovar-in-collection">
+                            <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}" class="product__link">
+                              <img src="/media/{{ product.image}}"  alt="" class="product__img">
+                            </a>
+                            <div class="product__actions">
+                              <form action="{% url 'CartAdd' product.slug %}" method="POST" class="add_cart">
+                                {% csrf_token %}
+                                <button class="new"><a  class="product__add-to-wishlist"><i class="ui-bag"></i><span>В корзину</span></a></button>
+                              </form>
+                            </div>
+                          </div>
+                          <div class="product__details">
+                            <h3 class="product__title">
+                              <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}">{{ product.name }}</a>
+                            </h3>
+                          </div>
+                          <span class="product__price">
+                            <ins>
+                            {% if product.stock > 0 %}
+                              <span class="amount" style="color: green">В наличии</span>
+                            {% else %}
+                              <span class="amount" style="color: red">Нет в наличии</span>
+                            {% endif %}
+                            </ins>
+                          </span>
+                          <br>
+                          <span class="product__price">
+                            <ins>
+                              Цена за м<sup><small>2</small></sup>: <span class="amount">{{ product.price }}</span>
+                            </ins>
+                          </span>
+                        </div> <!-- end product -->
+                      </div>
+                    {% endif %}
+                {% endfor %} 
+
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          
+              <div class="w-100"></div>
+
+
+              <div class="w-100"></div>
+
+          
+            
+            </div> <!-- end row -->
+            
+            <!-- Pagination -->
+            {% if products.paginator.num_pages > 1 %}
+              <div class="pagination clearfix">                
+                <nav class="pagination__nav right clearfix">
+                  {% if products.has_previous %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ products.previous_page_number }}&{{ if  }}" class="pagination__page"><i class="ui-arrow-left"></i></a>
+                  {% endif %}
+                  {% for pg in products.paginator.page_range %}
+                    {% if pg == products.number %}
+                      <span class="pagination__page pagination__page--current">{{ pg }}</span>
+                    {% else %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ pg }}" class="pagination__page">{{ pg }}</a>
+                    {% endif %}
+                  {% endfor %}  
+                  {% if products.has_next %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ products.next_page_number }}" class="pagination__page"><i class="ui-arrow-right"></i></a>
+                  {% endif %}
+                </nav>
+              </div>
+            {% endif %}

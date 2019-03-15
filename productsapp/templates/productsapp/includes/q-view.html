@@ -1,0 +1,74 @@
+<div class="col-md-6 product-slider">
+
+  <img src="/media/{{ product.image }}" width="100"  alt="" class="product__img">
+
+</div> <!-- end col img slider -->
+
+<div class="col-md-6 product-single">
+  <div class="quickview-popup__padding-box">       
+  
+    <h1 class="product-single__title uppercase">{{ product.name }}</h1>
+
+    <div class="product_meta">
+      <ul>
+        <li>
+          <span class="product-stock">В наличии:  {% if product.stock > 0 %}
+            <span class="amount" style="color: green"><b>ДА</b></span>
+          {% else %}
+            <span class="amount" style="color: red"><b>НЕТ</b></span>
+          {% endif %}</span>
+        </li>
+        <li>
+          <span class="product-article">Артикул: <span>{{ product.article }}</span></span>
+        </li>
+        <li>
+          <span class="product-country">Страна: <span>{{ product.collection.productproizvoditel.productcountry.name }}</span></span>
+        </li>
+        <li>
+          <span class="product-proizvoditel">Производитель: <span>{{ product.collection.productproizvoditel.name }}</span></span>
+        </li>
+        <li>
+          <span class="product-collection">Коллекция: <span>{{ product.collection }}</span></span>
+        </li>
+        <li>
+          <span class="product-tip">Тип: <span>{{ product.tip }}</span></span>
+        </li>
+        <li>
+          <span class="product-surface">Поверхность: <span>{{ product.surface }}</span></span>
+        </li>
+        <li>
+          <span class="product-color">Цвет: <span>{{ product.color }}</span></span>
+        </li>
+        <li>
+          <span class="product-height">Высота, см: <span>{{ product.height }}</span></span>
+        </li>
+        <li>
+          <span class="product-width">Ширина, см: <span>{{ product.width }}</span></span>
+        </li>
+        <li>
+          <span class="product-width">Кол-во в упаковке: <span>{{ product.col_in_upac }}</span></span>
+        </li>
+        <li>
+          <span class="product-area">Площадь в упаковке, м<sup><small>2</small></sup>: <span>{{ product.area }}</span></span>
+        </li>
+      </ul>                              
+    </div>
+
+  </div>
+
+
+
+</div> <!-- end col product description -->
+<div class="form-add">
+  <form action="{% url 'CartAdd' product.slug %}" method="POST" class="add_cart"> 
+    {% csrf_token %}
+    <div class="quantity">                
+      <input class="input" name="quantity" required="required" type="number" min="1" value="1">
+    </div>
+    <div class="row row-10 product-single__actions clearfix">
+      <div class="col">
+        <button class="btn btn-lg btn-dark product-single__add-to-cart"><i class="ui-bag"></i><span>В корзину</span></button>
+      </div>
+    </div>  
+  </form>
+</div>

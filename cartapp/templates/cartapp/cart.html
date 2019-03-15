@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block title %}Корзина товаров{% endblock %}
+{% block content %}
+    <!-- Page Title -->
+    <section class="page-title text-center">
+      <div class="container">
+        <h1 class=" heading page-title__title">Корзина товаров</h1>
+      </div>
+    </section> <!-- end page title -->
+
+
+    <!-- Cart -->
+    <section class="section-wrap cart pt-50 pb-40">
+      <div class="container relative">
+      {% if not cart %}
+        <h2>Корзина пуста :(</h2>
+      {% else %}
+        <div class="table-wrap">
+          <table class="shop_table cart table item">
+            <thead>
+              <tr>
+                <th class="product-name" colspan="2">Товар</th>
+                <th class="product-price">Цена</th>
+                <th class="product-quantity">Количество</th>
+                <th class="product-subtotal" colspan="2">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% include 'cartapp/includes/cart_item_detail.html' %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row mb-30">
+          <!--<div class="col-lg-5">
+            <div class="coupon">
+              <input type="text" name="coupon_code" id="coupon_code" class="input-text" value placeholder="Coupon code">
+              <input type="submit" name="apply_coupon" class="btn btn-md btn-dark btn-button" value="Apply">
+            </div>
+          </div>-->
+
+          <div class="col-lg-7">
+            <div class="actions">
+              <div class="wc-proceed-to-checkout">
+                <a href="{% url 'order_create' %}" class="btn btn-md btn-color btn-button"><span>Оформить заказ</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}  
+      </div> <!-- end container -->
+    </section> <!-- end cart -->
+{% endblock %}

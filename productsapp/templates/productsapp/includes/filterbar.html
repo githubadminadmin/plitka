@@ -1,0 +1,97 @@
+<!--<form action="/{{ cat }}" method="get" id="filter">
+{% for filter, values in filters.items %}
+  {% for id, value in values.items %}
+  <div class="card">
+    <div class="widget widget__filter-by-size widget--bottom-line">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#{{ id }}">
+          <h4 class="widget-title">{{ filter }}</h4>
+        </a>
+      </div>
+      <div id="{{ id }}" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+          <ul class="{{ id }}-select">
+
+            {% for v in value %}
+              <li>
+                <input type="checkbox" class="checkbox" id="{{ v.1 }}" name="{{ id }}" value="{{ v.0 }}" 
+                {% for pf in pr_ch %}{% if v.0 == pf and id == 'proizvoditel' %} checked{% endif %}{% endfor %}
+                {% for cl in cl_ch %}{% if v.0 == cl and id == 'collection' %} checked{% endif %}{% endfor %}
+                {% for sf in sf_ch %}{% if v.0 == sf and id == 'surface' %} checked{% endif %}{% endfor %}
+                {% for tp in tp_ch %}{% if v.0 == tp and id == 'tip' %} checked{% endif %}{% endfor %}
+                >
+                <label for="{{ v.1 }}" class="checkbox-label">{{ v.2 }}</label>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% endfor %}
+<div class="actions">
+  <div class="wc-proceed-to-checkout">
+    <input type="reset" class="btn btn-md btn-color btn-button" value="Очистить фильтр">
+  </div>
+</div>
+</form>-->
+
+
+
+<form action="/{{ cat }}" method="get" id="filter">
+  <div class="card">
+    <div class="widget widget__filter-by-size"><!--widget--bottom-line-->
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#proizvoditel">
+          <h4 class="widget-title">Производители</h4>
+        </a>
+      </div>
+      <div id="proizvoditel" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+          <ul class="proizvoditel-select">
+            {% for proizvoditel in proizvodit_filters %}
+              <li>
+                <input type="checkbox" class="checkbox" id="{{ proizvoditel.2 }}" name="pr" value="{{ proizvoditel.0 }}"
+                {% if proizvoditel.0 in pr_ch %} checked{% endif %}
+                >
+                <label for="{{ proizvoditel.2 }}" class="checkbox-label">{{ proizvoditel.1 }}</label>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="widget widget__filter-by-size"><!--widget--bottom-line-->
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collection">
+          <h4 class="widget-title">Коллекции</h4>
+        </a>
+      </div>
+      <div id="collection" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+          <ul class="collection-select">
+
+            {% for collection in collect_filters %}
+              <li>
+                <input type="checkbox" class="checkbox" id="{{ collection.2 }}" name="cl" value="{{ collection.0 }}"
+                {% if collection.0 in cl_ch %} checked{% endif %}
+                >
+                <label for="{{ collection.2 }}" class="checkbox-label">{{ collection.1 }}</label>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="actions">
+  <div class="wc-proceed-to-checkout">
+    <input type="reset" class="btn btn-md btn-color btn-button" value="Очистить фильтр">
+  </div>
+</div>
+</form>

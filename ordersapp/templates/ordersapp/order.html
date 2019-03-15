@@ -1,0 +1,141 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block title %}Ваш заказ{% endblock %}
+{% block content %}
+    <!-- Page Title -->
+    <section class="page-title text-center">
+      <div class="container">
+        <h1 class=" heading page-title__title">Ваш заказ</h1>
+      </div>
+    </section> <!-- end page title -->
+
+
+    <!-- Cart -->
+    <section class="section-wrap cart pt-50 pb-40">
+      <div class="container relative">
+        <p>Ваш заказ успешно создан. С Вами свяжется наш менеджер для уточнения заказа.</p>
+        <h2 class="contact-info__title uppercase">Детали заказа</h4>
+        <table class="table table-borderless info">
+          <tr>
+            <th >№ Заказа:</th>
+            <td>{{ order.id }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Имя:</th>
+            <td>{{ order.name }}</td>
+          </tr>
+          <tr>
+            <th>Фамилия:</th>
+            <td>{{ order.familiya }}</td>
+          </tr>
+          <tr>
+            <th>Отчество:</th>
+            <td>{{ order.otchestvo }}</td>
+          <tr>
+            <th>Телефон:</th>
+            <td>{{ order.phone }}</td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td>{{ order.email }}</td>
+          </tr>
+          {% if order.address %}
+            <tr>
+              <th>Адрес:</th>
+              <td>{{ order.address }}</td>
+            </tr>
+          {% endif %}
+          <tr>
+            <th>Способ доставки:</th>
+            <td>{{ order.delivery }}</td>
+          </tr>
+          <tr>
+            <th>Способ оплаты:</th>
+            <td>{{ order.payment }}</td>
+          </tr>
+          <tr>
+            <th>Состояние оплаты:</th>
+            <td>{% if order.paid == True %}Опланен{% else %}Неоплачен{% endif %}</td>
+          </tr>
+          <tr>
+            <th>Статус заказа:</th>
+            <td>{{ order.status }}</td>
+          </tr>
+          {% if order.comment %}
+            <tr>
+              <th>Комментарий:</th>
+              <td>{{ order.comment }}</td>
+            </tr>
+          {% endif %}
+        </table>
+        <br>
+        <br>
+        <h2 class="contact-info__title uppercase">Товарный состав заказа</h4>
+        <div class="table-wrap">
+          <table class="shop_table cart table">
+            <thead>
+              <tr>
+                <th class="product-name" colspan="2">Товар</th>
+                <th class="product-price">Цена</th>
+                <th class="product-quantity">Количество</th>
+                <th class="product-subtotal">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in order.items.all %}
+                  <tr class="cart_item">
+                    <td class="product-thumbnail">
+                      <a href="#">
+                        <img src="/media/{{ item.product.image }}" alt="" height="75">
+                      </a>
+                    </td>
+                    <td class="product-name">
+                      <a href="#">{{ item.product }}</a>
+                    </td>
+                    <td class="product-price">
+                      <span class="amount">{{ item.price }}</span>
+                    </td>
+                    <td class="product-quantity">
+                      <div class="quantity buttons_added">
+                        <span class="amount">{{ item.quantity }}</span>
+                      </div>
+                    </td>
+                    <td class="product-subtotal">
+                      <span class="amount">{{ item.get_cost }}</span>
+                    </td>
+                  </tr>
+              {% endfor %}
+                  <tr class="order-total">
+                    <th colspan="4">Сумма заказа</th>
+                    <td>
+                      <strong><span class="amount">{{ order.get_total_cost }}руб</span></strong>
+                    </td>
+                  </tr>
+            </tbody>
+          </table>
+        </div>
+
+        </div> <!-- end row -->     
+
+        
+      </div> <!-- end container -->
+    </section> <!-- end cart -->
+{% endblock %}

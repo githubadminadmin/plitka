@@ -1,0 +1,51 @@
+            <div class="row row-8">
+            {% for collect in products_collect %}
+            <div class="col-md-4">
+              <div class="col-md col-sm-6 product">
+                <div class="product__img-holder">
+                  <a href="/{{ collect.productcategory.slug }}/{{ collect.slug }}" class="product__link">
+                    <img src="/media/{{ collect.image }}" width="100"  alt="" class="product__img">
+                  </a>
+                </div>
+
+
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="/{{ collect.productcategory.slug }}/{{ collect.slug }}">{{ collect.GetCollectName }}</a>
+                  </h3>
+                </div>
+                
+              </div> <!-- end product -->
+            </div>
+            {% endfor %}
+          
+
+              <div class="w-100"></div>
+
+
+              <div class="w-100"></div>
+
+          
+            
+            </div> <!-- end row -->
+            
+            <!-- Pagination -->
+            {% if collect.paginator.num_pages > 1 %}
+              <div class="pagination clearfix">                
+                <nav class="pagination__nav right clearfix">
+                  {% if collect.has_previous %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ collect.previous_page_number }}&{{ if  }}" class="pagination__page"><i class="ui-arrow-left"></i></a>
+                  {% endif %}
+                  {% for pg in collect.paginator.page_range %}
+                    {% if pg == collect.number %}
+                      <span class="pagination__page pagination__page--current">{{ pg }}</span>
+                    {% else %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ pg }}" class="pagination__page">{{ pg }}</a>
+                    {% endif %}
+                  {% endfor %}  
+                  {% if collect.has_next %}
+                    <a href="{{ category.slug }}?{{ url }}page={{ collect.next_page_number }}" class="pagination__page"><i class="ui-arrow-right"></i></a>
+                  {% endif %}
+                </nav>
+              </div>
+            {% endif %}

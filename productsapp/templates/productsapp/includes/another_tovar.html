@@ -1,0 +1,41 @@
+<div class="testimonial">
+  {% for product in products %}
+
+    <div class="col-md-2 card-tovar">
+      <div class="col-md col-sm-6 product">
+        <div class="product__img-holder text-center another_tovar">
+          <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}" class="product__link">
+            <img src="/media/{{ product.image }}"  alt="" class="product__img">
+          </a>
+          <div class="product__actions">
+            <form action="{% url 'CartAdd' product.slug %}" method="POST" class="add_cart">
+              {% csrf_token %}
+              <button class="new"><a  class="product__add-to-wishlist"><i class="ui-bag"></i><span>В корзину</span></a></button>
+            </form>
+          </div>
+        </div>
+        <div class="product__details">
+          <h3 class="product__title">
+            <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}">{{ product.name }}</a>
+          </h3>
+        </div>
+        <span class="product__price">
+          <ins>
+          {% if product.stock > 0 %}
+            <span class="amount" style="color: green">В наличии</span>
+          {% else %}
+            <span class="amount" style="color: red">Нет в наличии</span>
+          {% endif %}
+          </ins>
+        </span>
+        <br>
+        <span class="product__price">
+          <ins>
+            Цена за м<sup><small>2</small></sup>: <span class="amount">{{ product.price }}</span>
+          </ins>
+        </span>
+      </div>  
+    </div>                  
+
+  {% endfor %}
+</div>

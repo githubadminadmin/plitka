@@ -1,0 +1,227 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% load products_tegs %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+    <!-- Single Product -->
+    <section class="section-wrap pb-20 product-single">
+      <div class="container">
+
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumbs">
+          <li>
+            <a href="{% url 'home' %}">Главная</a>
+          </li>
+          <li>
+            <a href="/{{ cat }}">{{ product.category }}</a>
+          </li>
+          <li class="active">
+            <a href="/{{ cat }}/{{ collect }}">{{ product.collection }}</a>
+          </li>
+          <li class="active">
+            {{ product.name }}
+          </li>
+        </ol>
+
+        <div class="row">
+
+          <div class="col-md-4 product-slider mb-50">
+
+            <div class="flickity flickity-slider-wrap mfp-hover">
+
+              <div class="text-center">
+                <a href="/media/{{ product.image }}" class="lightbox-img">
+                  <img src="/media/{{ product.image }}" alt="" />
+                </a>
+              </div>
+              
+            </div> <!-- end gallery main -->
+
+          </div> <!-- end col img slider -->
+
+          <div class="col-md-8 product-single">
+            <h1 class="product-single__title uppercase">{{ product.name }}</h1>
+ 
+            <span class="product-single__price">
+              <ins>
+                <span class="amount">Цена: {{ product.price }}руб</span>
+              </ins>
+            </span>            
+
+            <div class="product_meta pr col-md-6">
+              <ul>
+                <li>
+                  <span class="product-stock">В наличии:  {% if product.stock > 0 %}
+                    <span class="amount" style="color: green"><b>ДА</b></span>
+                  {% else %}
+                    <span class="amount" style="color: red"><b>НЕТ</b></span>
+                  {% endif %}</span>
+                </li>
+                <li>
+                  <span class="product-article">Артикул: <span>{{ product.article }}</span></span>
+                </li>
+                <li>
+                  <span class="product-country">Страна: <span>{{ product.collection.productproizvoditel.productcountry.name }}</span></span>
+                </li>
+                <li>
+                  <span class="product-proizvoditel">Производитель: <span>{{ product.collection.productproizvoditel.name }}</span></span>
+                </li>
+                <li>
+                  <span class="product-collection">Коллекция: <span>{{ product.collection }}</span></span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="form_in_cart col-md-6" >
+              <form action="{% url 'CartAdd' product.slug %}" method="POST" class="add_cart"> 
+                {% csrf_token %}
+                <div class="quantity buttons_added">
+                  <input type="button" value="-" class="minus">
+                  <input type="number" step="1" min="0" value="1" name="quantity" class="input-text qty text">
+                  <input type="button" value="+" class="plus">
+                </div>
+                <div class="row product-single__actions clearfix">
+                  <button class="btn btn-md btn-dark product-single__add-to-cart"><i class="ui-bag"></i><span>В корзину</span></button>
+                </div>  
+              </form>   
+            </div> 
+
+
+
+            <div class="params">
+              <h2>Характеристики:</h2>
+              <table class="table table-bordered">
+                <tbody>
+                  {% if product.copmositions %}
+                    <tr>
+                      <td>Тип</td>
+                      <td>{{ product.copmositions }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.surface %}
+                    <tr>
+                      <td>Поверхность</td>
+                      <td>{{ product.surface }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.color %}
+                    <tr>
+                      <td>Цвет</td>
+                      <td>{{ product.color }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.weight %}
+                    <tr>
+                      <td>Вес упаковки, кг</td>
+                      <td>{{ product.weight }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.height %}
+                    <tr>
+                      <td>Высота, мм</td>
+                      <td>{{ product.height }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.width  %}
+                    <tr>
+                      <td>Ширина, мм</td>
+                      <td>{{ product.width }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.col_in_upac %}
+                    <tr>
+                      <td>Кол-во в упаковке</td>
+                      <td>{{ product.col_in_upac }}</td>
+                    </tr>
+                  {% endif %}
+
+                  {% if product.area %}                  
+                    <tr>
+                      <td>Площадь в упаковке, м<sup><small>2</small></sup></td>
+                      <td>{{ product.area }}</td>
+                    </tr>
+                  {% endif %}
+                  {% if product.description %}                  
+                    <tr>
+                      <td>Состав</td>
+                      <td>{{ product.description }}</td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              </table> 
+            </div>                          
+
+          </div> <!-- end col product description -->
+        </div> <!-- end row -->
+       
+      </div> <!-- end container -->
+    </section> <!-- end single product -->
+
+
+    <!-- Related Products -->
+    <section class="section-wrap pt-0 pb-40">
+      <div class="container">
+
+        <div class="heading-row">
+          <div class="text-center">
+            <h2 class="heading bottom-line">
+              Еще товары из этой коллекции
+            </h2>
+          </div>
+        </div>
+
+        <div class="row row-8">
+          <div id="owl-testimonials" class="owl-carousel owl-theme owl-carousel--dark-arrows owl-carousel--visible-arrows">
+            {% for product in products %}
+              {{products|count_del:product}}            
+            {% endfor %}
+            </div> 
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end related products -->
+{% endblock %}
+          <!--<div class="col-md-3 card-tovar">
+              <div class="col-md col-sm-6 product">
+                <div class="product__img-holder">
+                  <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}" class="product__link">
+                    <img src="/media/{{ product.image }}" width="100"  alt="" class="product__img">
+                  </a>
+                  <div class="product__actions">
+                    <a href="#myModal"   data-toggle="modal" data-target="#myModal">
+                      <i class="ui-eye"></i>
+                      <span>Быстрый просмотр</span>
+                    </a>
+                    <form action="{% url 'CartAdd' product.slug %}" method="POST" class="add_cart">
+                      {% csrf_token %}
+                      <button class="new"><a  class="product__add-to-wishlist"><i class="ui-bag"></i><span>В корзину</span></a></button>
+                    </form>
+                  </div>
+                </div>
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="/{{ product.category.slug }}/{{ product.collection.slug }}/{{ product.slug }}">{{ product.name }}</a>
+                  </h3>
+                </div>
+                <span class="product__price">
+                  <ins>
+                  {% if product.stock > 0 %}
+                    <span class="amount" style="color: green">В наличии</span>
+                  {% else %}
+                    <span class="amount" style="color: red">Нет в наличии</span>
+                  {% endif %}
+                  </ins>
+                </span>
+                <br>
+                <span class="product__price">
+                  <ins>
+                    Цена за м<sup><small>2</small></sup>: <span class="amount">{{ product.price }}</span>
+                  </ins>
+                </span>
+              </div>  
+            </div>end product -->

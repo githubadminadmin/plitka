@@ -1,0 +1,210 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block title %}Интернет-магазин плитки{% endblock %}
+{% block content %}
+    <!-- Hero Slider -->
+    <section class="hero">
+      <div id="owl-hero" class="owl-carousel owl-theme owl-carousel--dots-inside">        
+
+        <div class="hero__slide" style="background-image: url({% static 'img/hero/1.jpg' %})">
+          <div class="container text-center">
+
+          </div>          
+        </div>
+
+        <div class="hero__slide" style="background-image: url({% static 'img/hero/2.jpg' %})">
+          <div class="container relative">
+            <div class="hero__holder">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__slide" style="background-image: url({% static 'img/hero/3.jpg' %})">
+          <div class="container text-center">
+            <div class="hero__holder-1">
+
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- end owl -->
+    </section> <!-- end hero slider -->
+
+    <!-- Feature -->
+    <section class="section-wrap pb-0">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-3 feature">
+            <i class="ui-cube feature__icon"></i>
+            <div class="feature__holder">
+              <h6 class="feature__title">Бесплатная доставка</h6>
+              <span class="feature__text">При заказе от 10000руб</span>
+            </div>            
+          </div>
+          <div class="col-md-3 feature">
+            <i class="ui-plane feature__icon"></i>
+            <div class="feature__holder">
+              <h6 class="feature__title">Быстрая доставка</h6>
+              <span class="feature__text">Доставим сразу же после получения заказа</span>
+            </div>
+          </div>
+          <div class="col-md-3 feature">
+            <i class="ui-pricetag feature__icon"></i>
+            <div class="feature__holder">
+              <h6 class="feature__title"><span class="feature__promo">Скидка 5%</span></h6>
+              <span class="feature__text">При оплате на сайте скидка на весь заказ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>    
+
+   <!-- New Arrivals -->
+    <section class="section-wrap  pb-30">
+      <div class="container">
+
+        <div class="heading-row">
+          <div class="text-center">
+            <h2 class="heading bottom-line">
+              Новинки
+            </h2>
+          </div>
+        </div>
+
+        <div class="row row-8">
+
+          {% for product in products_novinka %}
+            <div class="col-md-3">
+              <div class="col-md col-sm-6 product">
+                <div class="product__img-holder">
+                  <a href="/{{ product.productcategory.slug }}/{{ product.slug }}" class="product__link">
+                    <img src="/media/{{ product.image }}" width="100"  alt="" class="product__img">
+                  </a>
+                </div>
+
+
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="/{{ product.productcategory.slug }}/{{ product.slug }}">{{ product.GetCollectName }}</a>
+                  </h3>
+                </div>
+                
+              </div> <!-- end product -->
+            </div>
+          {% endfor %}
+    
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end new arrivals -->
+
+    <!-- Best Seller -->
+    <section class="section-wrap nopadding">
+      <div class="container">
+
+        <div class="heading-row">
+          <div class="text-center">
+            <h2 class="heading bottom-line">
+              Распродажа
+            </h2>
+          </div>
+        </div>
+
+        <div class="row row-8">
+          {% for product in products_sale %}
+            <div class="col-md-3">
+              <div class="col-md col-sm-6 product">
+                <div class="product__img-holder">
+                  <a href="/{{ product.productcategory.slug }}/{{ product.slug }}" class="product__link">
+                    <img src="/media/{{ product.image }}" width="100"  alt="" class="product__img">
+                  </a>
+                </div>
+
+
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="/{{ product.productcategory.slug }}/{{ product.slug }}">{{ product.GetCollectName }}</a>
+                  </h3>
+                </div>
+                
+              </div> <!-- end product -->
+            </div>
+          {% endfor %}
+      
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end best seller -->
+
+ 
+    <!-- O kompanii -->
+    <section class="section-wrap nopadding">
+      <div class="container">
+
+        <div class="heading-row">
+          <div class="text-center">
+            <h2 class="heading bottom-line text-left">
+              Инернет магазин "КАМЕНЬ ПЛИТКА"
+            </h2>
+          </div>
+        </div>
+
+        <div class="row row-8">
+          В нашем интернет-магазине вы сможете подобрать керамическую плитку по привлекательной цене. Наши специалисты помогут сделать правильной выбор, т. к. это опытные профессионалы, работающие не один год в этой сфере деятельности.
+
+          Мы уже давно занимаемся продажей плитки из керамики различных производителей. Именно этот фактор позволяет работать с большим количеством покупателей и иметь постоянных клиентов в Москве. Наш ассортимент привозится из разных стран (Россия, Украина, Китай, Испания) и производится проверенными известными фирмами (Gracia Ceramica, Cersanit, Baldocer, Сокол, Kerama Marazzi и др.). Все товары проходят проверку на качество.
+
+          В нашем каталоге на сайте вы можете выбрать и купить плитку следующих видов:
+
+          Плитка для ванной
+          Плитка для кухни
+          Напольная плитка
+          Керамогранит
+          и др.
+          Купите керамическую плитку у нас:
+
+          Мы работаем без перерывов и выходных.
+          Оперативно обрабатываем заявки с сайта.
+          Предоставляем наиболее полную информацию о характеристиках плитки.
+          Предоставляем актуальные данные о наличии товара на складе.
+          Цена на керамическую плитку в нашем интернет-магазине значительно ниже, чем в розничных магазинах, т. к. отсутствие арендуемого помещения позволяет снизить стоимость на товар.
+          Наш интернет-магазин плитки выполняет доставку собственной службой.
+          Оформить заказ вы можете прямо на сайте, воспользовавшись корзиной либо позвонив по контактному телефону.
+      
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end O kompaniir -->
+
+
+    <!-- Testimonials -->
+    <section class="section-wrap">
+      <div class="container">
+
+        <div class="heading-row">
+          <div class="text-center">
+            <h2 class="heading bottom-line">
+              производители
+            </h2>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+                {% for proizvoditel in proizvoditels %}
+                  <div class="col-md-3">
+                    <div class="col-md col-sm-6 product">
+                      <div class="product__img-holder">
+                        <a href="/{{ product.productcategory.slug }}/{{ product.slug }}" class="product__link">
+                          <img src="/media/{{ proizvoditel.image }}" width="100"  alt="" class="product__img">
+                        </a>
+                      </div>                     
+                    </div> <!-- end product -->
+                  </div>
+                {% endfor %}
+
+
+        </div> <!-- end carousel row -->
+
+      </div>
+    </section> <!-- end testimonials -->
+
+{% endblock %} 

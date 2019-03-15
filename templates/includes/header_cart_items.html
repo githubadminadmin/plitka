@@ -1,0 +1,56 @@
+          <a href="login.html" class="top-bar__item top-bar__sign-in" id="top-bar__sign-in"><i class="ui-user"></i>Войти</a>
+
+          <!-- Wishlist -->
+          <a href="#" class="top-bar__item"><i class="ui-heart"></i></a>
+          {% if cart|length > 0 %}
+            {% with total_items=cart|length %}
+              <div class="top-bar__item nav-cart">                
+                <a href="#">
+                  <i class="ui-bag"></i>({{ cart|length }})
+                </a>
+                <div class="nav-cart__dropdown">
+                  <div class="nav-cart__items">
+                        {% for item in cart %}
+                        {% with product=item.product %}
+                          <div class="nav-cart__item clearfix">
+                            <div class="nav-cart__img">
+                              <a href="/{{ product.category.slug }}/{{ product.slug }}">
+                                <img src="/media/{{ product.image }}" alt="" width="50">
+                              </a>
+                            </div>
+                            <div class="nav-cart__title">
+                              <a href="/{{ product.category.slug }}/{{ product.slug }}">
+                                {{ product.name }}
+                              </a>
+                              <div class="nav-cart__price">
+                                <span>{{ item.quantity }}шт | </span>
+                                <span>{{ item.total_price }}руб</span>
+                              </div>
+                            </div>
+                            <div class="nav-cart__remove">
+                              <a href="{% url 'CartRemove' product.slug  %}" class="cart_remove"><i class="ui-close"></i></a>
+                            </div>
+                          </div>
+                        {% endwith %}
+                        {% endfor %}
+                        <div class="nav-cart__summary">
+                          <span>Итого</span>
+                          <span class="nav-cart__total-price">{{ cart.get_total_price }}руб</span>
+                        </div>
+
+                      {% endwith %}
+
+                  </div> <!-- end cart items -->
+                  <div class="nav-cart__actions mt-20">
+                    <a href="{% url 'CartDetail' %}" class="btn btn-md btn-light"><span>В корзину</span></a>
+                    <a href="{% url 'order_create' %}" class="btn btn-md btn-color mt-10"><span>Оформить заказ</span></a>
+                  </div>
+                </div>
+              </div>
+
+        {% else %}
+            <div class="top-bar__item nav-cart">   
+              <a href="#"><i class="ui-bag"></i>(Корзина пуста)</a>             
+                
+            </div>
+        {% endif %}

@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+
+    <!-- Catalog -->
+    <section class="section-wrap pt-60 pb-30 catalog">
+      <div class="container">
+
+        <!-- Breadcrumbs -->
+        {% if products %}
+          <ol class="breadcrumbs">
+            <li>
+              <a href="{% url 'home' %}">Главная</a>
+            </li>
+            <li>
+              <a href="/{{ cat }}">{{ cat_name.name }}</a>
+            </li>
+            <li class="active">
+              {{ collect_name.name }}
+            </li>
+          </ol>
+        {% else %}
+          <ol class="breadcrumbs">
+            <li>
+              <a href="{% url 'home' %}">Главная</a>
+            </li>
+            <li class="active">
+              {{ cat_name.name }}
+            </li>
+          </ol>
+        {% endif %}
+
+        <div class="row">
+          <div class="col-lg-9 order-lg-2 mb-40">
+
+            <!-- Filter -->          
+
+
+            <div id="prod">
+            {% if products %}
+              {% include 'productsapp/includes/product.html' %}
+            {% endif %}
+
+            {% if products_collect %}
+              {% include 'productsapp/includes/collection.html' %}
+            {% endif %}
+            </div>
+
+          </div> <!-- end col -->
+
+
+          <!-- Sidebar -->
+          <aside class="col-lg-3 sidebar left-sidebar">
+          
+          <div id="accordion">
+             <!-- категории -->
+
+            <div class="card">
+              <div class="widget widget__filter-by-size "><!-- widget--bottom-line  -->
+                <div class="card-header">
+                  <a class="card-link" data-toggle="collapse" href="#category">
+                    <h4 class="widget-title">Категории</h4>
+                  </a>
+                </div>
+                <div id="category" class="collapse show" data-parent="#accordion">
+                  <div class="card-body">
+                    <ul>
+                      {% for category in categorys %}
+                        <li>
+                          <a href="/{{ category.slug }}" {% if category.slug in request.path   %} class="active" {% endif %}>{{ category.name }}</a>
+
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="filter">
+            {% include 'productsapp/includes/filterbar.html' with cat=cat  %}
+
+
+
+	      <!-- <input type="hidden" name="cat" value="{{ cat }}">-->
+            </div>
+
+          </aside> <!-- end sidebar -->
+
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end catalog -->
+
+{% endblock %}
